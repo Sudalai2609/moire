@@ -20,6 +20,17 @@ const floor = new THREE.Mesh(
 floor.rotation.x = -Math.PI / 2;
 scene.add(floor);
 
+const wallMat = new THREE.MeshStandardMaterial({ color: 0xf2e8dc });
+
+const backWall = new THREE.Mesh(new THREE.PlaneGeometry(10, 4), wallMat);
+backWall.position.set(0, 2, -5);
+scene.add(backWall);
+
+const leftWall = new THREE.Mesh(new THREE.PlaneGeometry(10, 4), wallMat);
+leftWall.position.set(-5, 2, 0);
+leftWall.rotation.y = Math.PI / 2;
+scene.add(leftWall);
+
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
