@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 
+export const doorway = ...
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe8ddd0);
 
