@@ -7,6 +7,9 @@ import { updateGarden } from './garden.js';
 import { updatePresence, togglePresence } from './presence.js';
 import { updatePet } from './pet.js';
 import './letterbox.js';
+import './windowletter.js';
+import './photobooth.js';
+import './plushie.js'; 
 
 function animate() {
   requestAnimationFrame(animate);
