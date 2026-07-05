@@ -10,6 +10,8 @@ import './letterbox.js';
 import './windowletter.js';
 import './photobooth.js';
 import './plushie.js'; 
+import './bouquet.js';
+import './milestone.js';
 
 function animate() {
   requestAnimationFrame(animate);
