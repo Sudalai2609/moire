@@ -1,6 +1,7 @@
 import { scene, camera, renderer, updateLight } from './world.js';
 import './interaction.js';
 import { updateMovement } from './controls.js';
+import './flower.js';
 
 function animate() {
   requestAnimationFrame(animate);
