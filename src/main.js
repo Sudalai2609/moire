@@ -3,11 +3,14 @@ import './interaction.js';
 import { updateMovement } from './controls.js';
 import './flower.js';
 import { updateTransitions } from './transitions.js';
+import { updateGarden } from './garden.js';
 
 function animate() {
   requestAnimationFrame(animate);
   updateLight();
   updateMovement();
+  updateTransitions();
+  updateGarden(performance.now() * 0.001);
   renderer.render(scene, camera);
 }
 animate();
