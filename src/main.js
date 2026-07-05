@@ -6,6 +6,7 @@ import { updateTransitions } from './transitions.js';
 import { updateGarden } from './garden.js';
 import { updatePresence, togglePresence } from './presence.js';
 import { updatePet } from './pet.js';
+import './letterbox.js';
 
 function animate() {
   requestAnimationFrame(animate);
