@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
+import { listenMilestone } from './firebase.js';
 
 const drawer = new THREE.Mesh(
   new THREE.BoxGeometry(0.4, 0.25, 0.3),
@@ -8,8 +9,10 @@ const drawer = new THREE.Mesh(
 drawer.position.set(-3.5, 0.5, 3.5);
 scene.add(drawer);
 
-// Placeholder date - replace with real anniversary later
-const unlockDate = new Date('2026-08-01');
+let unlockDate = new Date('2026-08-01');
+listenMilestone(dateStr => {
+  unlockDate = new Date(dateStr);
+});
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
