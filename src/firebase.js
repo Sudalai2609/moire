@@ -34,3 +34,13 @@ export function listenLetters(callback) {
     callback(Object.values(val));
   });
 }
+
+export function setPlushieHugged(hugged) {
+  set(ref(db, 'plushie/hugged'), hugged);
+}
+
+export function listenPlushie(callback) {
+  onValue(ref(db, 'plushie'), snapshot => {
+    callback(snapshot.val()?.hugged || false);
+  });
+}
