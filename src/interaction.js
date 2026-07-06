@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
+import { addMemoryNode } from './memorycorridor.js';
 
 const note = new THREE.Mesh(
   new THREE.PlaneGeometry(0.3, 0.4),
@@ -42,6 +43,7 @@ function onTap(clientX, clientY) {
     note.material.color.set(0xfffdf7);
     showNoteText();
     saveState();
+    addMemoryNode('opened the note');
   }
 }
 addEventListener('click', e => onTap(e.clientX, e.clientY));
@@ -56,4 +58,4 @@ function showNoteText() {
   font-family:serif;color:#5a4a42;background:rgba(255,253,247,0.9);padding:10px 20px;
   border-radius:8px;z-index:20;`;
   document.body.appendChild(div);
-}
+                                           }
