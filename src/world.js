@@ -54,6 +54,22 @@ gardenFloor.rotation.x = -Math.PI / 2;
 gardenFloor.position.set(15, 0, 0);
 scene.add(gardenFloor);
 
+export const doorway2 = new THREE.Mesh(
+  new THREE.PlaneGeometry(1.5, 3),
+  new THREE.MeshBasicMaterial({ color: 0xfff8f0, transparent: true, opacity: 0.3 })
+);
+doorway2.position.set(-5, 1.5, 0);
+doorway2.rotation.y = Math.PI / 2;
+scene.add(doorway2);
+
+const nookFloor = new THREE.Mesh(
+  new THREE.PlaneGeometry(10, 10),
+  new THREE.MeshStandardMaterial({ color: 0xc9b8a8 })
+);
+nookFloor.rotation.x = -Math.PI / 2;
+nookFloor.position.set(-15, 0, 0);
+scene.add(nookFloor);
+
 addEventListener('resize', () => {
   camera.aspect = innerWidth/innerHeight;
   camera.updateProjectionMatrix();
