@@ -18,6 +18,7 @@ import './milestone.js';
 import { updateLook } from './lookcontrols.js';
 import './audio.js';
 import { updateWeather } from './weather.js';
+import { updatePlant } from './plant.js';
 
 function animate() {
   requestAnimationFrame(animate);
@@ -28,6 +29,7 @@ function animate() {
   renderer.render(scene, camera);
   updatePet(performance.now() * 0.001);
   updateWeather(performance.now() * 0.001);
+  updatePlant();
 }
 animate();
 
