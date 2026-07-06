@@ -44,3 +44,21 @@ export function listenPlushie(callback) {
     callback(snapshot.val()?.hugged || false);
   });
 }
+
+export function setCandleLit(lit) {
+  set(ref(db, 'candle/lit'), lit);
+}
+export function listenCandle(callback) {
+  onValue(ref(db, 'candle'), snapshot => callback(snapshot.val()?.lit ?? true));
+}
+
+export function setMilestoneUnlocked(date) {
+  set(ref(db, 'milestone/unlockDate'), date);
+}
+
+export function setFlowerPlaced(placed) {
+  set(ref(db, 'flower/placed'), placed);
+}
+export function listenFlower(callback) {
+  onValue(ref(db, 'flower'), snapshot => callback(snapshot.val()?.placed ?? true));
+}
