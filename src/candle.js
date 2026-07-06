@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
 import { addMemoryNode } from './memorycorridor.js';
+import { setCandleLit, listenCandle } from './firebase.js';
 
 const base = new THREE.Mesh(
   new THREE.CylinderGeometry(0.04, 0.04, 0.12),
@@ -17,8 +18,10 @@ flame.position.set(-2, 0.15, 2);
 scene.add(flame);
 
 let lit = true;
-const state = JSON.parse(localStorage.getItem('moireCandle') || '{}');
-if (state.lit === false) { lit = false; flame.visible = false; }
+listenCandle(val => {
+  lit = val;
+  flame.visible = lit;
+});
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -29,10 +32,8 @@ function onTap(clientX, clientY) {
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects([base, flame]);
   if (hits.length) {
-    lit = !lit;
-    flame.visible = lit;
-    localStorage.setItem('moireCandle', JSON.stringify({ lit }));
-    addMemoryNode(lit ? 'lit the candle' : 'blew out the candle');
+    setCandleLit(!lit);
+    addMemoryNode(!lit ? 'lit the candle' : 'blew out the candle');
   }
 }
 addEventListener('click', e => onTap(e.clientX, e.clientY));
