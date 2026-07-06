@@ -62,3 +62,9 @@ export function setFlowerPlaced(placed) {
 export function listenFlower(callback) {
   onValue(ref(db, 'flower'), snapshot => callback(snapshot.val()?.placed ?? true));
 }
+
+export function listenMilestone(callback) {
+  onValue(ref(db, 'milestone'), snapshot => {
+    callback(snapshot.val()?.unlockDate || '2026-08-01');
+  });
+}
