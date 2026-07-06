@@ -16,6 +16,7 @@ import './plushie.js';
 import './bouquet.js';
 import './milestone.js';
 import { updateLook } from './lookcontrols.js';
+import './audio.js';
 
 function animate() {
   requestAnimationFrame(animate);
