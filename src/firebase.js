@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, set, onValue, push } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnQJkCI1rUvemQelhIdUIcvdU5yNtqdz0",
@@ -21,5 +21,16 @@ export function setPresence(userId, isHere) {
 export function listenPresence(callback) {
   onValue(ref(db, 'presence'), snapshot => {
     callback(snapshot.val() || {});
+  });
+}
+
+export function addLetter(text) {
+  push(ref(db, 'letterbox'), { text, time: Date.now() });
+}
+
+export function listenLetters(callback) {
+  onValue(ref(db, 'letterbox'), snapshot => {
+    const val = snapshot.val() || {};
+    callback(Object.values(val));
   });
 }
