@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 
-export const doorway = ...
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe8ddd0);
 
@@ -39,7 +38,7 @@ leftWall.position.set(-5, 2, 0);
 leftWall.rotation.y = Math.PI / 2;
 scene.add(leftWall);
 
-const doorway = new THREE.Mesh(
+export const doorway = new THREE.Mesh(
   new THREE.PlaneGeometry(1.5, 3),
   new THREE.MeshBasicMaterial({ color: 0xfff8f0, transparent: true, opacity: 0.3 })
 );
