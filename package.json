@@ -7,11 +7,10 @@
     "build": "vite build"
   },
   "dependencies": {
-    "three": "^0.160.0"
+    "three": "^0.160.0",
+    "firebase": "^10.7.0"
   },
   "devDependencies": {
     "vite": "^5.0.0"
   }
 }
-
-"firebase": "^10.7.0"
