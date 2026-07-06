@@ -53,3 +53,27 @@ export function updateLook() {
   camera.rotation.y = yaw;
   camera.rotation.x = pitch;
 }
+
+addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  if (isLookZone(t.clientX)) {
+    dragging = true;
+    lastX = t.clientX;
+    lastY = t.clientY;
+  }
+}, { passive: false });
+
+addEventListener('touchmove', e => {
+  if (!dragging) return;
+  e.preventDefault();
+  const t = e.touches[0];
+  const dx = t.clientX - lastX;
+  const dy = t.clientY - lastY;
+  yaw -= dx * 0.005;
+  pitch -= dy * 0.005;
+  pitch = Math.max(-1.2, Math.min(1.2, pitch));
+  lastX = t.clientX;
+  lastY = t.clientY;
+}, { passive: false });
+
+addEventListener('touchend', () => dragging = false);
