@@ -19,6 +19,7 @@ import { updateLook } from './lookcontrols.js';
 import './audio.js';
 import { updateWeather } from './weather.js';
 import { updatePlant } from './plant.js';
+import { applySeason } from './season.js';
 
 function animate() {
   requestAnimationFrame(animate);
@@ -32,5 +33,7 @@ function animate() {
   updatePlant();
 }
 animate();
+
+applySeason();
 
 setTimeout(togglePresence, 5000);
