@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
+import { setPlushieHugged, listenPlushie } from './firebase.js';
 
 const body = new THREE.Mesh(
   new THREE.SphereGeometry(0.18, 12, 12),
@@ -20,8 +21,10 @@ ear2.position.set(2.08, 0.3, -1);
 scene.add(ear2);
 
 let hugged = false;
-const state = JSON.parse(localStorage.getItem('moirePlushie') || '{}');
-if (state.hugged) { hugged = true; body.scale.set(1.15, 1.15, 1.15); }
+listenPlushie(val => {
+  hugged = val;
+  body.scale.set(hugged ? 1.15 : 1, hugged ? 1.15 : 1, hugged ? 1.15 : 1);
+});
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -32,9 +35,7 @@ function onTap(clientX, clientY) {
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects([body, ear1, ear2]);
   if (hits.length) {
-    hugged = !hugged;
-    body.scale.set(hugged ? 1.15 : 1, hugged ? 1.15 : 1, hugged ? 1.15 : 1);
-    localStorage.setItem('moirePlushie', JSON.stringify({ hugged }));
+    setPlushieHugged(!hugged);
   }
 }
 addEventListener('click', e => onTap(e.clientX, e.clientY));
