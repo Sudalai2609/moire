@@ -15,6 +15,7 @@ import './photobooth.js';
 import './plushie.js'; 
 import './bouquet.js';
 import './milestone.js';
+import { updateLook } from './lookcontrols.js';
 
 function animate() {
   requestAnimationFrame(animate);
