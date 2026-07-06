@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
+import { setFlowerPlaced, listenFlower } from './firebase.js';
 
 const stem = new THREE.Mesh(
   new THREE.CylinderGeometry(0.02, 0.02, 0.4),
@@ -16,12 +17,11 @@ bloom.position.set(-1.5, 0.42, 1.5);
 scene.add(bloom);
 
 let placed = true;
-const state = JSON.parse(localStorage.getItem('moireFlower') || '{}');
-if (state.placed === false) {
-  placed = false;
-  stem.visible = false;
-  bloom.visible = false;
-}
+listenFlower(val => {
+  placed = val;
+  stem.visible = placed;
+  bloom.visible = placed;
+});
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -32,10 +32,7 @@ function onTap(clientX, clientY) {
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects([stem, bloom]);
   if (hits.length && placed) {
-    placed = false;
-    stem.visible = false;
-    bloom.visible = false;
-    localStorage.setItem('moireFlower', JSON.stringify({ placed }));
+    setFlowerPlaced(false);
   }
 }
 addEventListener('click', e => onTap(e.clientX, e.clientY));
