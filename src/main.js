@@ -20,6 +20,7 @@ import './audio.js';
 import { updateWeather } from './weather.js';
 import { updatePlant } from './plant.js';
 import { applySeason } from './season.js';
+import { updateCandle } from './candle.js';
 
 function animate() {
   requestAnimationFrame(animate);
@@ -31,6 +32,7 @@ function animate() {
   updatePet(performance.now() * 0.001);
   updateWeather(performance.now() * 0.001);
   updatePlant();
+  updateCandle(performance.now() * 0.001);
 }
 animate();
 
