@@ -47,10 +47,24 @@ addEventListener('touchend', () => {
 
 export function updateMovement() {
   const speed = 0.05;
-  if (keys['w']) camera.position.z -= speed;
-  if (keys['s']) camera.position.z += speed;
-  if (keys['a']) camera.position.x -= speed;
-  if (keys['d']) camera.position.x += speed;
-  camera.position.x += joystick.dx * speed;
-  camera.position.z += joystick.dy * speed;
+  const nx = camera.position.x, nz = camera.position.z;
+  let moveX = 0, moveZ = 0;
+  if (keys['w']) moveZ -= speed;
+  if (keys['s']) moveZ += speed;
+  if (keys['a']) moveX -= speed;
+  if (keys['d']) moveX += speed;
+  moveX += joystick.dx * speed;
+  moveZ += joystick.dy * speed;
+
+  const targetX = camera.position.x + moveX;
+  const targetZ = camera.position.z + moveZ;
+
+  // Simple bounds: stay within room unless near a doorway (x -20 to 20 wide corridor)
+  const withinRoom = targetX > -4.8 && targetX < 4.8 && targetZ > -4.8 && targetZ < 4.8;
+  const inCorridor = Math.abs(targetZ) < 1.5; // doorway width
+
+  if (withinRoom || inCorridor) {
+    camera.position.x = targetX;
+    camera.position.z = targetZ;
+  }
 }
