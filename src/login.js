@@ -16,12 +16,15 @@ export function showLogin(onSuccess) {
   font-family:serif;z-index:100;`;
 
   div.addEventListener('touchstart', e => e.stopPropagation());
-div.addEventListener('click', e => e.stopPropagation());
+  div.addEventListener('click', e => e.stopPropagation());
 
   div.innerHTML = `
     <h1 style="color:#6a5a52;font-weight:normal;margin-bottom:20px;">moiré</h1>
     <input id="emailInput" type="email" placeholder="email" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">
-    <input id="passInput" type="password" placeholder="password" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">
+    <div style="position:relative;">
+      <input id="passInput" type="password" placeholder="password" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">
+      <span id="togglePass" style="position:absolute;right:10px;top:14px;cursor:pointer;color:#8a7a70;font-size:12px;">show</span>
+    </div>
     <button id="loginBtn" style="margin-top:15px;padding:10px 30px;border-radius:8px;background:#c9a86a;border:none;color:white;">enter</button>
     <p id="loginError" style="color:#b5495b;margin-top:10px;"></p>
   `;
@@ -33,5 +36,12 @@ div.addEventListener('click', e => e.stopPropagation());
     login(email, pass).catch(err => {
       document.getElementById('loginError').textContent = 'wrong email or password';
     });
+  };
+
+  document.getElementById('togglePass').onclick = () => {
+    const p = document.getElementById('passInput');
+    const t = document.getElementById('togglePass');
+    p.type = p.type === 'password' ? 'text' : 'password';
+    t.textContent = p.type === 'password' ? 'show' : 'hide';
   };
 }
