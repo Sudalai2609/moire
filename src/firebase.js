@@ -67,8 +67,10 @@ export function listenFlower(callback) {
 export function listenMilestone(callback) {
   onValue(ref(db, 'milestone'), snapshot => {
     callback(snapshot.val()?.unlockDate || '2026-08-01');
+  });
+}
 
-    export const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export function login(email, password) {
   return signInWithEmailAndPassword(auth, email, password);
@@ -76,6 +78,4 @@ export function login(email, password) {
 
 export function onAuthChange(callback) {
   onAuthStateChanged(auth, callback);
-    }
-  });
 }
