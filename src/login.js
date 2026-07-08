@@ -15,6 +15,9 @@ export function showLogin(onSuccess) {
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   font-family:serif;z-index:100;`;
 
+  div.addEventListener('touchstart', e => e.stopPropagation());
+div.addEventListener('click', e => e.stopPropagation());
+
   div.innerHTML = `
     <h1 style="color:#6a5a52;font-weight:normal;margin-bottom:20px;">moiré</h1>
     <input id="emailInput" type="email" placeholder="email" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">
