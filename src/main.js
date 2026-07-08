@@ -1,18 +1,19 @@
 window.onerror = function(msg, url, line) {
-    document.body.innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap;">' + msg + '\nFile: ' + url + '\nLine: ' + line + '</pre>';
-    };
+  document.body.innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap;">' + msg + '\nFile: ' + url + '\nLine: ' + line + '</pre>';
+};
+
 import { scene, camera, renderer, updateLight } from './world.js';
 import './interaction.js';
 import { updateMovement } from './controls.js';
 import './flower.js';
 import { updateTransitions } from './transitions.js';
 import { updateGarden } from './garden.js';
-import { updatePresence, togglePresence } from './presence.js';
+import { updatePresence } from './presence.js';
 import { updatePet } from './pet.js';
 import './letterbox.js';
 import './windowletter.js';
 import './photobooth.js';
-import './plushie.js'; 
+import './plushie.js';
 import './bouquet.js';
 import './milestone.js';
 import { updateLook } from './lookcontrols.js';
@@ -28,14 +29,14 @@ function animate() {
   updateMovement();
   updateTransitions();
   updateGarden(performance.now() * 0.001);
-  renderer.render(scene, camera);
   updatePet(performance.now() * 0.001);
   updateWeather(performance.now() * 0.001);
   updatePlant();
   updateCandle(performance.now() * 0.001);
+  updatePresence();
+  updateLook();
+  renderer.render(scene, camera);
 }
 animate();
 
 applySeason();
-
-setTimeout(togglePresence, 5000);
