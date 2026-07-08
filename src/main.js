@@ -2,6 +2,7 @@ window.onerror = function(msg, url, line) {
   document.body.innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap;">' + msg + '\nFile: ' + url + '\nLine: ' + line + '</pre>';
 };
 
+import { showLogin } from './login.js';
 import { scene, camera, renderer, updateLight } from './world.js';
 import './interaction.js';
 import { updateMovement } from './controls.js';
@@ -37,6 +38,8 @@ function animate() {
   updateLook();
   renderer.render(scene, camera);
 }
-animate();
 
-applySeason();
+showLogin(() => {
+  animate();
+  applySeason();
+});
