@@ -60,7 +60,7 @@ export function updateMovement() {
   const targetZ = camera.position.z + moveZ;
 
   // Simple bounds: stay within room unless near a doorway (x -20 to 20 wide corridor)
-  const withinRoom = targetX > -4.8 && targetX < 4.8 && targetZ > -4.8 && targetZ < 4.8;
+  const withinRoom = targetX > -4.8 && targetX < 4.8 && targetZ > -4.8 && targetZ < 5.2;
   const inCorridor = Math.abs(targetZ) < 1.5; // doorway width
 
   if (withinRoom || inCorridor) {
