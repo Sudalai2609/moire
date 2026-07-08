@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set, onValue, push } from 'firebase/database';
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnQJkCI1rUvemQelhIdUIcvdU5yNtqdz0",
@@ -66,5 +67,15 @@ export function listenFlower(callback) {
 export function listenMilestone(callback) {
   onValue(ref(db, 'milestone'), snapshot => {
     callback(snapshot.val()?.unlockDate || '2026-08-01');
+
+    export const auth = getAuth(app);
+
+export function login(email, password) {
+  return signInWithEmailAndPassword(auth, email, password);
+}
+
+export function onAuthChange(callback) {
+  onAuthStateChanged(auth, callback);
+    }
   });
 }
