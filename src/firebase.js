@@ -93,3 +93,12 @@ export function setBouquetChoice(color) {
 export function listenBouquetChoice(callback) {
   onValue(ref(db, 'bouquet'), snapshot => callback(snapshot.val()?.color || null));
 }
+
+export function savePhotoStrip(dataUrl) {
+  set(ref(db, 'photobooth/lastStrip'), { image: dataUrl, time: Date.now() });
+}
+export function listenPhotoStrip(callback) {
+  onValue(ref(db, 'photobooth'), snapshot => {
+    callback(snapshot.val()?.image || null);
+  });
+}
