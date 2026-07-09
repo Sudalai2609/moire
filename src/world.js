@@ -22,6 +22,10 @@ export function updateLight() {
   light.intensity = 0.9 + warmth * 0.3;
 }
 
+const sun = new THREE.DirectionalLight(0xffffff, 2);
+sun.position.set(10, 20, 10);
+scene.add(sun);
+
 const floor = new THREE.Mesh(
   new THREE.PlaneGeometry(10, 10),
   new THREE.MeshStandardMaterial({ color: 0xd8c9b0 })
