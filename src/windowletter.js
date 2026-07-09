@@ -1,5 +1,7 @@
+
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
+import { setWindowLetterOpened, listenWindowLetter } from './firebase.js';
 
 const frame = new THREE.Mesh(
   new THREE.PlaneGeometry(0.4, 0.5),
@@ -16,11 +18,10 @@ glass.position.set(-2.5, 0.9, -4.88);
 scene.add(glass);
 
 let opened = false;
-const state = JSON.parse(localStorage.getItem('moireWindowLetter') || '{}');
-if (state.opened) {
-  opened = true;
-  glass.material.opacity = 0.2;
-}
+listenWindowLetter(val => {
+  opened = val;
+  glass.material.opacity = opened ? 0.2 : 0.6;
+});
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -31,9 +32,7 @@ function onTap(clientX, clientY) {
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects([frame, glass]);
   if (hits.length && !opened) {
-    opened = true;
-    glass.material.opacity = 0.2;
-    localStorage.setItem('moireWindowLetter', JSON.stringify({ opened: true }));
+    setWindowLetterOpened(true);
     showLetter();
   }
 }
