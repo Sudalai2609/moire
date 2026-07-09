@@ -102,3 +102,12 @@ export function listenPhotoStrip(callback) {
     callback(snapshot.val()?.image || null);
   });
 }
+
+export function sendSignal(path, data) {
+  set(ref(db, 'signaling/' + path), data);
+}
+export function listenSignal(path, callback) {
+  onValue(ref(db, 'signaling/' + path), snapshot => {
+    callback(snapshot.val());
+  });
+}
