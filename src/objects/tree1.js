@@ -11,7 +11,7 @@ const loader = new GLTFLoader();
 export function createTree1(scene, position = { x: 0, y: 0, z: 0 }) {
 
     loader.load(
-        "/src/assets/models/tree1.glb",
+        "/src/assets/models/tree.glb",
 
         (gltf) => {
 
