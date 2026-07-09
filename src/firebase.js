@@ -79,3 +79,17 @@ export function login(email, password) {
 export function onAuthChange(callback) {
   onAuthStateChanged(auth, callback);
 }
+
+export function setWindowLetterOpened(opened) {
+  set(ref(db, 'windowLetter/opened'), opened);
+}
+export function listenWindowLetter(callback) {
+  onValue(ref(db, 'windowLetter'), snapshot => callback(snapshot.val()?.opened || false));
+}
+
+export function setBouquetChoice(color) {
+  set(ref(db, 'bouquet/color'), color);
+}
+export function listenBouquetChoice(callback) {
+  onValue(ref(db, 'bouquet'), snapshot => callback(snapshot.val()?.color || null));
+}
