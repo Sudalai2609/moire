@@ -22,7 +22,7 @@ export function updateLight() {
   light.intensity = 0.9 + warmth * 0.3;
 }
 
-const sun = new THREE.DirectionalLight(0xffffff, 2);
+const sun = new THREE.DirectionalLight(0xffe8d0, 1.2);
 sun.position.set(10, 20, 10);
 scene.add(sun);
 
