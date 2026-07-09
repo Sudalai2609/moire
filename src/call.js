@@ -99,3 +99,18 @@ function showMessage(text, isMine) {
   box.appendChild(msg);
   box.scrollTop = box.scrollHeight;
           }
+export function endCall() {
+  if (pc) pc.close();
+  document.getElementById('localVid')?.remove();
+  document.getElementById('remoteVid')?.remove();
+  document.getElementById('chatBox')?.remove();
+}
+
+export function toggleMute() {
+  if (!pc) return;
+  const sender = pc.getSenders().find(s => s.track && s.track.kind === 'audio');
+  if (sender) {
+    sender.track.enabled = !sender.track.enabled;
+    return sender.track.enabled;
+  }
+}
