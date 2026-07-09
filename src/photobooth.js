@@ -31,5 +31,43 @@ addEventListener('touchstart', e => {
 });
 
 function openBooth() {
-  alert('photobooth coming soon 📷');
+  const panel = document.createElement('div');
+  panel.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(30,25,22,0.95);z-index:30;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;font-family:serif;color:#f5e8d8;`;
+
+  panel.innerHTML = `
+    <video id="camPreview" autoplay playsinline style="width:280px;height:210px;border-radius:12px;background:#000;"></video>
+    <canvas id="camCanvas" width="280" height="210" style="display:none;"></canvas>
+    <img id="camResult" style="width:280px;border-radius:12px;display:none;">
+    <div style="margin-top:15px;">
+      <button id="snapBtn" style="padding:10px 20px;border-radius:8px;background:#c9a86a;border:none;color:white;margin:5px;">capture</button>
+      <button id="closeBtn" style="padding:10px 20px;border-radius:8px;background:none;border:1px solid #c9a86a;color:#c9a86a;margin:5px;">close</button>
+    </div>
+  `;
+  document.body.appendChild(panel);
+
+  const video = panel.querySelector('#camPreview');
+  const canvas = panel.querySelector('#camCanvas');
+  const resultImg = panel.querySelector('#camResult');
+  let stream;
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(s => { stream = s; video.srcObject = s; })
+    .catch(() => { panel.querySelector('#snapBtn').textContent = 'camera unavailable'; });
+
+  panel.querySelector('#snapBtn').onclick = () => {
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataUrl = canvas.toDataURL('image/png');
+    resultImg.src = dataUrl;
+    resultImg.style.display = 'block';
+    video.style.display = 'none';
+    localStorage.setItem('moireLastPhoto', dataUrl);
+  };
+
+  panel.querySelector('#closeBtn').onclick = () => {
+    if (stream) stream.getTracks().forEach(t => t.stop());
+    document.body.removeChild(panel);
+  };
 }
