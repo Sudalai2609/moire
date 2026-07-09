@@ -23,6 +23,7 @@ import { updateWeather } from './weather.js';
 import { updatePlant } from './plant.js';
 import { applySeason } from './season.js';
 import { updateCandle } from './candle.js';
+import './callui.js';
 
 function animate() {
   requestAnimationFrame(animate);
