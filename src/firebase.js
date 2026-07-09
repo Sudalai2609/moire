@@ -111,3 +111,10 @@ export function listenSignal(path, callback) {
     callback(snapshot.val());
   });
 }
+
+export function setCallState(state) {
+  set(ref(db, 'callState'), state);
+}
+export function listenCallState(callback) {
+  onValue(ref(db, 'callState'), snapshot => callback(snapshot.val()));
+}
