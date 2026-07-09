@@ -1,7 +1,9 @@
+
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
+import { setBouquetChoice } from './firebase.js';
 
-const colors = [0xe8a5c0, 0xf0d060, 0xb8a0e0, 0x9bc9e8]; // pink, yellow, lavender, blue
+const colors = [0xe8a5c0, 0xf0d060, 0xb8a0e0, 0x9bc9e8];
 const flowers = [];
 
 colors.forEach((color, i) => {
@@ -33,8 +35,8 @@ function onTap(clientX, clientY) {
   const hits = raycaster.intersectObjects(meshes);
   if (hits.length) {
     const picked = flowers.find(f => f.stem === hits[0].object || f.bloom === hits[0].object);
-    localStorage.setItem('moireBouquetChoice', JSON.stringify({ color: picked.color }));
-    alert('flower chosen 🌸 (placeholder for gifting flow)');
+    setBouquetChoice(picked.color);
+    alert('flower chosen 🌸');
   }
 }
 addEventListener('click', e => onTap(e.clientX, e.clientY));
