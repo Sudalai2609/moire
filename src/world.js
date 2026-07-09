@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { createTree1 } from './objects/tree1.js';
 
 export const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xe8ddd0);
@@ -53,6 +54,11 @@ const gardenFloor = new THREE.Mesh(
 gardenFloor.rotation.x = -Math.PI / 2;
 gardenFloor.position.set(15, 0, 0);
 scene.add(gardenFloor);
+createTree1(scene, {
+  x: 16,
+  y: 0,
+  z: -2
+});
 
 export const doorway2 = new THREE.Mesh(
   new THREE.PlaneGeometry(1.5, 3),
