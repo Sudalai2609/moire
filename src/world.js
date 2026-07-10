@@ -10,6 +10,9 @@ camera.position.set(0, 1.6, 5);
 export const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(innerWidth, innerHeight);
 document.body.appendChild(renderer.domElement);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.2;
 
 export const light = new THREE.HemisphereLight(0xfff0e0, 0x444444, 1);
 scene.add(light);
