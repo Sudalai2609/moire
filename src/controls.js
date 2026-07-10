@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { camera } from './world.js';
 
 const keys = {};
@@ -45,8 +46,6 @@ addEventListener('touchend', () => {
   dot.style.transform = `translate(0,0)`;
 });
 
-import * as THREE from 'three';
-
 let velocityX = 0, velocityZ = 0;
 const accel = 0.008;
 const friction = 0.85;
@@ -61,7 +60,6 @@ export function updateMovement() {
   inputX += joystick.dx;
   inputZ += joystick.dy;
 
-  // Move relative to where the camera is actually facing (yaw only)
   const yaw = camera.rotation.y;
   const forward = new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw));
   const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
