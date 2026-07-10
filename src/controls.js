@@ -45,26 +45,52 @@ addEventListener('touchend', () => {
   dot.style.transform = `translate(0,0)`;
 });
 
+import * as THREE from 'three';
+
+let velocityX = 0, velocityZ = 0;
+const accel = 0.008;
+const friction = 0.85;
+const maxSpeed = 0.06;
+
 export function updateMovement() {
-  const speed = 0.05;
-  const nx = camera.position.x, nz = camera.position.z;
-  let moveX = 0, moveZ = 0;
-  if (keys['w']) moveZ -= speed;
-  if (keys['s']) moveZ += speed;
-  if (keys['a']) moveX -= speed;
-  if (keys['d']) moveX += speed;
-  moveX += joystick.dx * speed;
-  moveZ += joystick.dy * speed;
+  let inputX = 0, inputZ = 0;
+  if (keys['w']) inputZ -= 1;
+  if (keys['s']) inputZ += 1;
+  if (keys['a']) inputX -= 1;
+  if (keys['d']) inputX += 1;
+  inputX += joystick.dx;
+  inputZ += joystick.dy;
 
-  const targetX = camera.position.x + moveX;
-  const targetZ = camera.position.z + moveZ;
+  // Move relative to where the camera is actually facing (yaw only)
+  const yaw = camera.rotation.y;
+  const forward = new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw));
+  const right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
 
-  // Simple bounds: stay within room unless near a doorway (x -20 to 20 wide corridor)
+  const desiredX = (forward.x * -inputZ + right.x * inputX);
+  const desiredZ = (forward.z * -inputZ + right.z * inputX);
+
+  velocityX += desiredX * accel;
+  velocityZ += desiredZ * accel;
+  velocityX *= friction;
+  velocityZ *= friction;
+
+  const speed = Math.hypot(velocityX, velocityZ);
+  if (speed > maxSpeed) {
+    velocityX = (velocityX / speed) * maxSpeed;
+    velocityZ = (velocityZ / speed) * maxSpeed;
+  }
+
+  const targetX = camera.position.x + velocityX;
+  const targetZ = camera.position.z + velocityZ;
+
   const withinRoom = targetX > -4.8 && targetX < 4.8 && targetZ > -4.8 && targetZ < 5.2;
-  const inCorridor = Math.abs(targetZ) < 1.5; // doorway width
+  const inCorridor = Math.abs(targetZ) < 1.5;
 
   if (withinRoom || inCorridor) {
     camera.position.x = targetX;
     camera.position.z = targetZ;
+  } else {
+    velocityX = 0;
+    velocityZ = 0;
   }
 }
