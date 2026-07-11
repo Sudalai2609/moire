@@ -35,23 +35,25 @@ function showSettings() {
   panel.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;
   background:rgba(40,35,32,0.92);z-index:95;display:flex;flex-direction:column;
   align-items:center;justify-content:center;font-family:serif;color:#f5e8d8;`;
-panel.addEventListener('click', e => e.stopPropagation());
-panel.addEventListener('touchstart', e => e.stopPropagation());
+  panel.addEventListener('click', e => e.stopPropagation());
+  panel.addEventListener('touchstart', e => e.stopPropagation());
 
   const soundOn = localStorage.getItem('moireSound') !== 'off';
+  const savedGfx = localStorage.getItem('moireGraphics') || 'medium';
+  const savedSens = localStorage.getItem('moireSensitivity') || '5';
 
   panel.innerHTML = `
     <h2 style="font-weight:normal;letter-spacing:1px;">settings</h2>
     <label style="margin:12px;"><input type="checkbox" id="soundToggle" ${soundOn ? 'checked' : ''}> sound</label>
     <label style="margin:12px;">graphics quality
       <select id="gfxSelect" style="margin-left:8px;padding:4px;border-radius:6px;">
-        <option value="low">low</option>
-        <option value="medium" selected>medium</option>
-        <option value="high">high</option>
+        <option value="low" ${savedGfx === 'low' ? 'selected' : ''}>low</option>
+        <option value="medium" ${savedGfx === 'medium' ? 'selected' : ''}>medium</option>
+        <option value="high" ${savedGfx === 'high' ? 'selected' : ''}>high</option>
       </select>
     </label>
     <label style="margin:12px;">look sensitivity
-      <input type="range" id="sensSlider" min="1" max="10" value="5" style="margin-left:8px;">
+      <input type="range" id="sensSlider" min="1" max="10" value="${savedSens}" style="margin-left:8px;">
     </label>
     <button id="logoutBtn" style="margin-top:20px;padding:10px 30px;border-radius:8px;background:#b5495b;border:none;color:white;">log out</button>
     <button id="closeSettings" style="margin-top:10px;background:none;border:none;color:#c9a86a;">close</button>
@@ -72,3 +74,4 @@ panel.addEventListener('touchstart', e => e.stopPropagation());
   };
   document.getElementById('closeSettings').onclick = () => panel.remove();
 }
+  
