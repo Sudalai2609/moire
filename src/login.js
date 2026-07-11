@@ -20,10 +20,8 @@ export function showLogin(onSuccess) {
 
   div.innerHTML = `
     <h1 style="color:#6a5a52;font-weight:normal;margin-bottom:20px;">moiré</h1>
-    <input id="emailInput" type="email" placeholder="email" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">
-    <div style="position:relative;">
-      <input id="passInput" type="password" placeholder="password" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">
-      <span id="togglePass" style="position:absolute;right:10px;top:14px;cursor:pointer;color:#8a7a70;font-size:12px;">show</span>
+<input id="emailInput" type="email" placeholder="email" autocomplete="off" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">    <div style="position:relative;">
+<input id="passInput" type="password" placeholder="password" autocomplete="new-password" style="padding:10px;margin:5px;border-radius:8px;border:1px solid #c9a86a;width:200px;">      <span id="togglePass" style="position:absolute;right:10px;top:14px;cursor:pointer;color:#8a7a70;font-size:12px;">show</span>
     </div>
     <button id="loginBtn" style="margin-top:15px;padding:10px 30px;border-radius:8px;background:#c9a86a;border:none;color:white;">enter</button>
     <p id="loginError" style="color:#b5495b;margin-top:10px;"></p>
