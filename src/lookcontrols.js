@@ -2,14 +2,16 @@ import { camera } from './world.js';
 
 let yaw = 0, pitch = 0;
 let dragging = false, lastX = 0, lastY = 0;
+let lookTouchId = null;
 
 function isLookZone(x) {
   return x > innerWidth / 2;
 }
 
 addEventListener('touchstart', e => {
-  const t = e.touches[0];
-  if (isLookZone(t.clientX)) {
+  const t = Array.from(e.changedTouches).find(t => isLookZone(t.clientX));
+  if (t) {
+    lookTouchId = t.identifier;
     dragging = true;
     lastX = t.clientX;
     lastY = t.clientY;
@@ -18,8 +20,9 @@ addEventListener('touchstart', e => {
 
 addEventListener('touchmove', e => {
   if (!dragging) return;
+  const t = Array.from(e.touches).find(t => t.identifier === lookTouchId);
+  if (!t) return;
   e.preventDefault();
-  const t = e.touches[0];
   const dx = t.clientX - lastX;
   const dy = t.clientY - lastY;
   const sens = (parseInt(localStorage.getItem('moireSensitivity')) || 5) / 5000;
@@ -30,7 +33,10 @@ addEventListener('touchmove', e => {
   lastY = t.clientY;
 }, { passive: false });
 
-addEventListener('touchend', () => dragging = false);
+addEventListener('touchend', e => {
+  const stillDown = Array.from(e.touches).some(t => t.identifier === lookTouchId);
+  if (!stillDown) dragging = false;
+});
 
 addEventListener('mousedown', e => {
   if (isLookZone(e.clientX)) {
@@ -56,4 +62,4 @@ export function updateLook() {
   camera.rotation.order = 'YXZ';
   camera.rotation.y = yaw;
   camera.rotation.x = pitch;
-}
+    }
