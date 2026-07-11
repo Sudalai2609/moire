@@ -4,11 +4,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <meta charset="UTF-8" />
   <title>Moiré</title>
-  <style>
-    body { margin: 0; overflow: hidden; background: #e8ddd0; }
-    canvas { display: block; }
-    canvas { touch-action: none; }
-  </style>
+<style>
+  body { margin: 0; overflow: hidden; background: #e8ddd0; }
+  canvas { display: block; }
+  canvas { touch-action: none; }
+  input[type="range"] { touch-action: pan-x; }
+</style>
 </head>
 <body>
   <script type="module" src="/src/main.js"></script>
