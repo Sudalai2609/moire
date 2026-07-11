@@ -8,6 +8,8 @@ export function showHub(onEnter) {
   background:linear-gradient(135deg,#f5e6d8,#e8d5e0,#d8e0e8);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   font-family:serif;z-index:90;`;
+  div.addEventListener('click', e => e.stopPropagation());
+div.addEventListener('touchstart', e => e.stopPropagation());
 
   div.innerHTML = `
     <h1 style="color:#6a5a52;font-weight:normal;font-size:36px;letter-spacing:2px;">moiré</h1>
@@ -33,6 +35,8 @@ function showSettings() {
   panel.style.cssText = `position:fixed;top:0;left:0;width:100%;height:100%;
   background:rgba(40,35,32,0.92);z-index:95;display:flex;flex-direction:column;
   align-items:center;justify-content:center;font-family:serif;color:#f5e8d8;`;
+panel.addEventListener('click', e => e.stopPropagation());
+panel.addEventListener('touchstart', e => e.stopPropagation());
 
   const soundOn = localStorage.getItem('moireSound') !== 'off';
 
