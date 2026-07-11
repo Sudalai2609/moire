@@ -24,6 +24,7 @@ import { updatePlant } from './plant.js';
 import { applySeason } from './season.js';
 import { updateCandle } from './candle.js';
 import './callui.js';
+import { showHub } from './hub.js';
 
 function animate() {
   requestAnimationFrame(animate);
@@ -41,6 +42,8 @@ function animate() {
 }
 
 showLogin(() => {
-  animate();
-  applySeason();
+  showHub(() => {
+    animate();
+    applySeason();
+  });
 });
