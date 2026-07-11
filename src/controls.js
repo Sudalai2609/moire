@@ -1,3 +1,4 @@
+
 import * as THREE from 'three';
 import { camera } from './world.js';
 
@@ -6,6 +7,7 @@ addEventListener('keydown', e => keys[e.key.toLowerCase()] = true);
 addEventListener('keyup', e => keys[e.key.toLowerCase()] = false);
 
 const joystick = { dx: 0, dy: 0, active: false, startX: 0, startY: 0 };
+let joystickTouchId = null;
 
 const base = document.createElement('div');
 base.style.cssText = `position:fixed;left:30px;bottom:30px;width:100px;height:100px;
@@ -21,13 +23,16 @@ knob.appendChild(dot);
 document.body.appendChild(knob);
 
 base.addEventListener('touchstart', e => {
+  const t = e.changedTouches[0];
+  joystickTouchId = t.identifier;
   joystick.active = true;
-  joystick.startX = e.touches[0].clientX;
-  joystick.startY = e.touches[0].clientY;
+  joystick.startX = t.clientX;
+  joystick.startY = t.clientY;
 });
 addEventListener('touchmove', e => {
   if (!joystick.active) return;
-  const t = e.touches[0];
+  const t = Array.from(e.touches).find(t => t.identifier === joystickTouchId);
+  if (!t) return;
   let dx = t.clientX - joystick.startX;
   let dy = t.clientY - joystick.startY;
   const max = 40;
@@ -39,11 +44,14 @@ addEventListener('touchmove', e => {
   joystick.dx = dx / max;
   joystick.dy = dy / max;
 });
-addEventListener('touchend', () => {
-  joystick.active = false;
-  joystick.dx = 0;
-  joystick.dy = 0;
-  dot.style.transform = `translate(0,0)`;
+addEventListener('touchend', e => {
+  const stillDown = Array.from(e.touches).some(t => t.identifier === joystickTouchId);
+  if (!stillDown) {
+    joystick.active = false;
+    joystick.dx = 0;
+    joystick.dy = 0;
+    dot.style.transform = `translate(0,0)`;
+  }
 });
 
 let velocityX = 0, velocityZ = 0;
@@ -58,7 +66,7 @@ export function updateMovement() {
   if (keys['a']) inputX -= 1;
   if (keys['d']) inputX += 1;
   inputX += joystick.dx;
-inputZ -= joystick.dy;
+  inputZ -= joystick.dy;
 
   const yaw = camera.rotation.y;
   const forward = new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw));
