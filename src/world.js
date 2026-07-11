@@ -14,6 +14,10 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.2;
 
+const gfx = localStorage.getItem('moireGraphics') || 'medium';
+const pixelRatios = { low: 0.75, medium: 1, high: Math.min(window.devicePixelRatio, 2) };
+renderer.setPixelRatio(pixelRatios[gfx]);
+
 export const light = new THREE.HemisphereLight(0xfff0e0, 0x444444, 1);
 scene.add(light);
 
