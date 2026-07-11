@@ -58,7 +58,7 @@ export function updateMovement() {
   if (keys['a']) inputX -= 1;
   if (keys['d']) inputX += 1;
   inputX += joystick.dx;
-  inputZ += joystick.dy;
+inputZ -= joystick.dy;
 
   const yaw = camera.rotation.y;
   const forward = new THREE.Vector3(Math.sin(yaw), 0, Math.cos(yaw));
