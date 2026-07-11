@@ -25,6 +25,7 @@ import { applySeason } from './season.js';
 import { updateCandle } from './candle.js';
 import './callui.js';
 import { showHub } from './hub.js';
+import { showExitButton } from './exitbutton.js';
 
 function animate() {
   requestAnimationFrame(animate);
@@ -42,8 +43,12 @@ function animate() {
 }
 
 showLogin(() => {
+  showLogin(() => {
   showHub(() => {
     animate();
     applySeason();
+    showExitButton(() => {
+      location.reload(); // simplest: reload back to login/hub
+    });
   });
 });
