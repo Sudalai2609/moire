@@ -1,8 +1,10 @@
 window.onerror = function(msg, url, line) {
-  document.body.innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap;">' + msg + '\nFile: ' + url + '\nLine: ' + line + '</pre>';
+  document.body.innerHTML = '<pre style="color:red;padding:20px;white-space:pre-wrap;">' + msg + ' File: ' + url + ' Line: ' + line + '</pre>';
 };
 
 import { showLogin } from './login.js';
+import { showHub } from './hub.js';
+import { showExitButton } from './exitbutton.js';
 import { scene, camera, renderer, updateLight } from './world.js';
 import './interaction.js';
 import { updateMovement } from './controls.js';
@@ -24,8 +26,6 @@ import { updatePlant } from './plant.js';
 import { applySeason } from './season.js';
 import { updateCandle } from './candle.js';
 import './callui.js';
-import { showHub } from './hub.js';
-import { showExitButton } from './exitbutton.js';
 
 function animate() {
   requestAnimationFrame(animate);
@@ -42,13 +42,12 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-showLogin(() => {
-  showLogin(() => {
-  showHub(() => {
+showLogin(function() {
+  showHub(function() {
     animate();
     applySeason();
-    showExitButton(() => {
-      location.reload(); // simplest: reload back to login/hub
+    showExitButton(function() {
+      location.reload();
     });
   });
 });
