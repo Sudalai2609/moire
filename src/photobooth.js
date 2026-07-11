@@ -1,3 +1,4 @@
+
 import * as THREE from 'three';
 import { scene, camera } from './world.js';
 import { savePhotoStrip, listenPhotoStrip } from './firebase.js';
@@ -18,13 +19,18 @@ scene.add(screen);
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
+let boothOpen = false;
 
 function onTap(clientX, clientY) {
+  if (boothOpen) return;
   pointer.x = (clientX / innerWidth) * 2 - 1;
   pointer.y = -(clientY / innerHeight) * 2 + 1;
   raycaster.setFromCamera(pointer, camera);
   const hits = raycaster.intersectObjects([frame, screen]);
-  if (hits.length) openBooth();
+  if (hits.length) {
+    boothOpen = true;
+    openBooth();
+  }
 }
 addEventListener('click', e => onTap(e.clientX, e.clientY));
 addEventListener('touchstart', e => {
@@ -81,6 +87,7 @@ function openBooth() {
   panel.querySelector('#closeBtn').onclick = () => {
     if (stream) stream.getTracks().forEach(t => t.stop());
     document.body.removeChild(panel);
+    boothOpen = false;
   };
 
   function takeShots() {
@@ -143,22 +150,3 @@ function openBooth() {
 listenPhotoStrip(imageUrl => {
   // Available for future use: e.g. showing last strip somewhere in the world
 });
-
-let boothOpen = false;
-
-function onTap(clientX, clientY) {
-  if (boothOpen) return;
-  pointer.x = (clientX / innerWidth) * 2 - 1;
-  pointer.y = -(clientY / innerHeight) * 2 + 1;
-  raycaster.setFromCamera(pointer, camera);
-  const hits = raycaster.intersectObjects([frame, screen]);
-  if (hits.length) {
-    boothOpen = true;
-    openBooth();
-    panel.querySelector('#closeBtn').onclick = () => {
-  if (stream) stream.getTracks().forEach(t => t.stop());
-  document.body.removeChild(panel);
-  boothOpen = false;
-};
-  }
-}
